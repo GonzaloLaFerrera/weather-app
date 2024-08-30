@@ -44,11 +44,10 @@ const App = () => {
       const data = await response.json();
 
       //Es el error en Inglés que viene del BackEnd
-      if(data.error) throw { message: data.error.message }; 
+      // if(data.error) throw { message: data.error.message }; 
       
       //Validación personalizada teniendo en cuenta el código del error que manda el BackEnd
-      // if(data.error.code === 1006) throw { message: 'No existe esa locación en la base de datos'}
-      //(no funciona correctamente, da un error cuando vuelvo a ingresar data en el input aunque sea correcta)
+      if(data.error?.code === 1006) throw { message: 'No existe esa locación en la base de datos'}
 
       console.log(data)
       
@@ -72,6 +71,8 @@ const App = () => {
     }
   };
 
+  console.log(weatherData.city)
+
   return (
     <Container
       maxWidth="xs"
@@ -83,7 +84,7 @@ const App = () => {
         align="center"
         gutterBottom
       >
-        My Weather App with MUI!
+        Weather...up!
       </Typography>
       <Box
         component='form'
@@ -114,6 +115,7 @@ const App = () => {
       </Box>
 
       {/* Aca mostraremos la data resultante de la busqueda */}
+      {weatherData.city && 
       <Box
         sx={{
           mt: 2,
@@ -149,7 +151,8 @@ const App = () => {
         >
           {weatherData.conditionText}
         </Typography>
-      </Box>
+      </Box>}
+      
 
 
       <Typography
